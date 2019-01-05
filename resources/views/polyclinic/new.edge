@@ -1,0 +1,69 @@
+@layout('layouts.base')
+
+@section('title')
+Tambah Poliklinik
+@endsection
+
+@section('extracss')
+<!-- UIkit CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.25/css/uikit.min.css" />
+
+<!-- UIkit JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.25/js/uikit.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.25/js/uikit-icons.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    setTimeout(function(){
+    $('#success').fadeOut('fast');
+    }, 3000);
+</script>
+@endsection
+
+@section('content')
+  <div class="uk-container">
+        <div class="uk-card uk-card-default uk-card-body uk-width-1-1@m uk-position-center" style="width:50%">
+            <h3 class="uk-card-title">Tambah Poliklinik</h3>
+
+            @if(flashMessage('message'))
+                <div class="uk-alert-success" id="success" uk-alert>
+                    <a class="uk-alert-close" uk-close></a>
+                    <span>{{ flashMessage('message')}}</span>
+                </div>
+                
+            @endif
+
+        <form action="{{ route('PolyclinicController.store') }}" method="POST" id="add_poly">
+            {{ csrfField() }}
+
+            <form class="uk-form-stacked">
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">Kode Poliklinik</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="form-stacked-text" type="text" placeholder="Kode poliklinik" name="polyclinic_id">
+                            @if(hasErrorFor('polyclinic_id'))
+                            <small class="uk-text-danger">{{ getErrorFor('polyclinic_id') }}</small>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">Poliklinik</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="form-stacked-text" type="text" placeholder="Nama poliklinik" name="polyclinic_name">
+                            @if(hasErrorFor('polyclinic_name'))
+                            <small class="uk-text-danger">{{ getErrorFor('polyclinic_name') }}</small>
+                            @endif
+                        </div>
+                    </div>
+                    
+                    <p uk-margin style="float:right">
+                        <button class="uk-button uk-button-primary uk-button-small">Simpan</button>
+                        <a href="#" class="uk-button uk-button-danger uk-button-small">Batal</a>
+                    </p>
+                </form>
+        </form>
+        </div>
+  </div>
+@endsection

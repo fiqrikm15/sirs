@@ -1,0 +1,71 @@
+@layout('layouts.base')
+
+@section('title')
+Tambah Dokter Spesialis
+@endsection
+
+@section('extracss')
+<script type="text/javascript">
+    setTimeout(function(){
+    $('#success').fadeOut('fast');
+    }, 3000);
+</script>
+@endsection
+
+@section('content')
+<div class="uk-container">
+    <div class="uk-card uk-card-default uk-card-body uk-width-1-1@m uk-position-center" style="width:50%">
+            <h3 class="uk-card-title">Tambah Dokter Spesialis</h3>
+
+            @if(flashMessage('message'))
+                <div class="uk-alert-success" id="success" uk-alert>
+                    <a class="uk-alert-close" uk-close></a>
+                    <span>{{ flashMessage('message')}}</span>
+                </div>
+            @endif
+
+        <form action="{{ route('DoctorController.store') }}" method="POST">
+            {{ csrfField() }}
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">Kode Dokter</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" value="{{ old('doctor_id', '')}}" id="form-stacked-text" type="text" placeholder="Kode dokter" name="doctor_id">
+                            @if(hasErrorFor('doctor_id'))
+                            <small class="uk-text-danger">{{ getErrorFor('doctor_id') }}</small>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-stacked-text">Nama Dokter</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="form-stacked-text" type="text" placeholder="Nama dokter" name="doctor_name" value="{{ old('doctor_name', '')}}">
+                            @if(hasErrorFor('doctor_name'))
+                            <small class="uk-text-danger" id="message">{{ getErrorFor('doctor_name') }}</small>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-select">Spesialis</label>
+                        <div class="uk-form-controls">
+                            <select class="uk-select" id="form-horizontal-select" name="polyclinic_id">
+                            @each(polyclinic in polyclinics)
+                            <option value="{{ polyclinic.polyclinic_id }}">{{polyclinic.polyclinic_name}}</option>
+                            @endeach
+                            </select>
+                            @if(hasErrorFor('polyclinic_id'))
+                            <small class="uk-text-danger">{{ getErrorFor('polyclinic_id') }}</small>
+                            @endif
+                        </div>
+                    </div>
+                    
+                    <p uk-margin style="float:right">
+                        <button class="uk-button uk-button-primary uk-button-small">Simpan</button>
+                        <a href="#" class="uk-button uk-button-danger uk-button-small">Batal</a>
+                    </p>
+        </form>
+    </div>
+</div>
+@endsection
